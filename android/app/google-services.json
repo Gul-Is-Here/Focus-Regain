@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "763300230706",
+    "project_id": "regain-focuse",
+    "storage_bucket": "regain-focuse.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763300230706:android:86597297cced221b6aae2b",
+        "android_client_info": {
+          "package_name": "com.focuseregain.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNsSEyQorxOF6L1hAu_9wmRHv0ngm_aw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
