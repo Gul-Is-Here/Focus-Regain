@@ -17,38 +17,21 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions are not supported for this platform.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
         return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        return windows;
-      case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
         );
     }
   }
-
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDk_lY1rXJifEY0Vgcv-M8_2TdkuzibEcQ',
-    appId: '1:763300230706:web:d0cd04d517510f6f6aae2b',
-    messagingSenderId: '763300230706',
-    projectId: 'regain-focuse',
-    authDomain: 'regain-focuse.firebaseapp.com',
-    storageBucket: 'regain-focuse.firebasestorage.app',
-    measurementId: 'G-K6BREL1WCH',
-  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCNsSEyQorxOF6L1hAu_9wmRHv0ngm_aw0',
@@ -65,24 +48,5 @@ class DefaultFirebaseOptions {
     projectId: 'regain-focuse',
     storageBucket: 'regain-focuse.firebasestorage.app',
     iosBundleId: 'com.focuseregain.app',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCbH5OxFl7ZDCFN0_18hKfFhojtO_l073g',
-    appId: '1:763300230706:ios:a8ca5196ea3de6456aae2b',
-    messagingSenderId: '763300230706',
-    projectId: 'regain-focuse',
-    storageBucket: 'regain-focuse.firebasestorage.app',
-    iosBundleId: 'com.focuseregain.app',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDk_lY1rXJifEY0Vgcv-M8_2TdkuzibEcQ',
-    appId: '1:763300230706:web:15998e99bf012b736aae2b',
-    messagingSenderId: '763300230706',
-    projectId: 'regain-focuse',
-    authDomain: 'regain-focuse.firebaseapp.com',
-    storageBucket: 'regain-focuse.firebasestorage.app',
-    measurementId: 'G-EVYZ226PSH',
   );
 }

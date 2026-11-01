@@ -1,1 +1,57 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"regain-focuse","appId":"1:763300230706:android:86597297cced221b6aae2b","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"regain-focuse","appId":"1:763300230706:ios:a8ca5196ea3de6456aae2b","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"regain-focuse","appId":"1:763300230706:ios:a8ca5196ea3de6456aae2b","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"regain-focuse","configurations":{"android":"1:763300230706:android:86597297cced221b6aae2b","ios":"1:763300230706:ios:a8ca5196ea3de6456aae2b","macos":"1:763300230706:ios:a8ca5196ea3de6456aae2b","web":"1:763300230706:web:d0cd04d517510f6f6aae2b","windows":"1:763300230706:web:15998e99bf012b736aae2b"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "regain-focuse",
+          "appId": "1:763300230706:android:86597297cced221b6aae2b",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "regain-focuse",
+          "appId": "1:763300230706:ios:a8ca5196ea3de6456aae2b",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "regain-focuse",
+          "configurations": {
+            "android": "1:763300230706:android:86597297cced221b6aae2b",
+            "ios": "1:763300230706:ios:a8ca5196ea3de6456aae2b"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "nodejs22",
+      "ignore": [
+        "node_modules",
+        "test",
+        ".git",
+        "*.log"
+      ]
+    }
+  ],
+  "emulators": {
+    "firestore": {
+      "host": "0.0.0.0",
+      "port": 8080
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true
+  }
+}

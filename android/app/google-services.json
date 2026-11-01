@@ -12,7 +12,28 @@
           "package_name": "com.focuseregain.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "763300230706-gpmn342ur5p13fcred7jnfgbr6vad5qg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.focuseregain.app",
+            "certificate_hash": "ef3099fae7264c3cc92725827a9ee4ebf3bf6743"
+          }
+        },
+        {
+          "client_id": "763300230706-i204705o6ropph7rdh17g8qljnvgd6s6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.focuseregain.app",
+            "certificate_hash": "0eb743d24793dd017063912957f888516b56135d"
+          }
+        },
+        {
+          "client_id": "763300230706-hj0bq2q3mu0ahgt6ooopvqoanvaggb77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCNsSEyQorxOF6L1hAu_9wmRHv0ngm_aw0"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763300230706-hj0bq2q3mu0ahgt6ooopvqoanvaggb77.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763300230706-f1rv5op00e7gefbu8d02pnus8aas4gq8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.focuseregain.app"
+              }
+            }
+          ]
         }
       }
     }

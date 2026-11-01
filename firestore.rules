@@ -1,0 +1,77 @@
+rules_version = '2';
+
+// Each user can read and write only their own data. Notifications are sent by
+// Cloud Functions (Admin SDK, which bypasses these rules), never by clients.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function validMinute(m) {
+      return m is int && m >= 0 && m < 1440;
+    }
+
+    function validTimed(p) {
+      return p is map && p.keys().hasOnly(['enabled', 'minute'])
+        && p.enabled is bool && validMinute(p.minute);
+    }
+
+    function validPrefs(p) {
+      return p is map
+        && p.keys().hasOnly(['focusEncouragement', 'dailySummary', 'reEngagement', 'quietHours'])
+        && (!('focusEncouragement' in p) || validTimed(p.focusEncouragement))
+        && (!('dailySummary' in p) || validTimed(p.dailySummary))
+        && (!('reEngagement' in p) || (p.reEngagement is map
+          && p.reEngagement.keys().hasOnly(['enabled']) && p.reEngagement.enabled is bool))
+        && (!('quietHours' in p) || (p.quietHours is map
+          && p.quietHours.keys().hasOnly(['enabled', 'start', 'end'])
+          && p.quietHours.enabled is bool
+          && validMinute(p.quietHours.start) && validMinute(p.quietHours.end)));
+    }
+
+    // Only what notifications need: no screen time, no app names.
+    function validUser(d) {
+      return d.keys().hasOnly(['timezone', 'lastActiveAt', 'lastActiveDay', 'notificationPrefs', 'focus'])
+        && (!('timezone' in d) || (d.timezone is string && d.timezone.size() <= 64))
+        && (!('lastActiveDay' in d) || (d.lastActiveDay is string
+          && d.lastActiveDay.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')))
+        // Server time only, so "last active" can't be faked forward or back.
+        && (!('lastActiveAt' in d) || d.lastActiveAt == request.time
+          || (resource != null && resource.data.get('lastActiveAt', null) == d.lastActiveAt))
+        && (!('notificationPrefs' in d) || validPrefs(d.notificationPrefs))
+        && (!('focus' in d) || (d.focus is map && d.focus.keys().hasOnly(['sessions', 'updatedAt'])
+          && d.focus.sessions is list && d.focus.sessions.size() <= 60));
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid) && validUser(request.resource.data);
+
+      match /devices/{deviceId} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid)
+          && deviceId.size() <= 64
+          && request.resource.data.keys().hasOnly(['fid', 'platform', 'updatedAt'])
+          && request.resource.data.fid is string
+          && request.resource.data.fid.size() > 0 && request.resource.data.fid.size() <= 300
+          && request.resource.data.platform in ['android', 'ios']
+          && request.resource.data.updatedAt == request.time;
+      }
+
+      // Send log, written by Cloud Functions. The app may only mark it opened, once.
+      match /notifications/{notificationId} {
+        allow read: if isOwner(uid);
+        allow update: if isOwner(uid)
+          && !('openedAt' in resource.data)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['openedAt'])
+          && request.resource.data.openedAt == request.time;
+      }
+
+      // Server-only state (check-in streaks).
+      match /private/{doc} {
+        allow read, write: if false;
+      }
+    }
+  }
+}
