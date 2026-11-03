@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- One Play phone screenshot, 1080x1920. Pick it with ?n=1..7; edit the
+     headlines in SHOTS below, then run store_listing/render.sh. -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Jakarta; font-weight: 500; src: url(../../assets/fonts/PlusJakartaSans-500.ttf); }
+  @font-face { font-family: Jakarta; font-weight: 800; src: url(../../assets/fonts/PlusJakartaSans-800.ttf); }
+  html, body { margin: 0; }
+  body {
+    width: 1080px; height: 1920px; overflow: hidden; position: relative;
+    font-family: Jakarta, sans-serif; color: #EEF2EC;
+    background:
+      radial-gradient(900px 620px at 85% 105%, rgba(97,135,100,.55), transparent 70%),
+      radial-gradient(700px 500px at 0% 0%, rgba(156,176,128,.22), transparent 70%),
+      linear-gradient(180deg, #1C262A 0%, #273338 100%);
+  }
+  .copy { position: absolute; top: 84px; left: 80px; right: 80px; text-align: center; }
+  h1 { margin: 0; font-weight: 800; font-size: 68px; line-height: 1.08; letter-spacing: -1.5px; }
+  h1 em { font-style: normal; color: #A9C08B; }
+  p { margin: 18px 0 0; font-weight: 500; font-size: 32px; line-height: 1.3; color: #B3C0B8; }
+  /* The real screen, status bar and home bar trimmed, scaled evenly (no stretch). */
+  .screen {
+    position: absolute; left: 130px; top: 318px; width: 820px; height: 1628px;
+    border-radius: 56px 56px 0 0; overflow: hidden;
+    box-shadow: 0 0 0 2px rgba(238,242,236,.10), 0 30px 90px rgba(0,0,0,.45);
+  }
+  .screen img { display: block; width: 820px; margin-top: calc(-70px * 820 / 1080); }
+</style>
+</head>
+<body>
+<div class="copy"><h1 id="h"></h1><p id="s"></p></div>
+<div class="screen"><img id="img" alt=""></div>
+<script>
+  const SHOTS = [
+    ['01_dashboard',    '<em>Screen time</em> at a glance', "Today's total against your own daily target"],
+    ['05_blocking',     'Block what <em>pulls you in</em>', 'Always, on a schedule, or with a mindful pause'],
+    ['10_focus_active', 'Stay in <em>focus mode</em>', 'Chosen apps stay blocked until the timer ends'],
+    ['07_rules',        'Set a <em>daily limit</em> per app', 'Blocked for the rest of the day once time is up'],
+    ['08_schedule',     'Block on <em>your schedule</em>', 'Work hours, bedtime, any days you pick'],
+    ['03_dash_week',    'Watch your <em>week</em> improve', 'Top categories and 7 days against your target'],
+    ['04_focus_idle',   'Build a daily <em>focus habit</em>', 'Focus goals, streaks and distractions stopped'],
+  ];
+  const n = Number(new URLSearchParams(location.search).get('n') || 1);
+  const [file, head, sub] = SHOTS[n - 1];
+  document.getElementById('h').innerHTML = head;
+  document.getElementById('s').textContent = sub;
+  document.getElementById('img').src = '../raw/' + file + '.png';
+</script>
+</body>
+</html>
