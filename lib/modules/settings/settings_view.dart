@@ -172,6 +172,13 @@ class SettingsView extends GetView<SettingsViewModel> {
                               controller.account?.name,
                           onTap: () => _confirmSignOut(context),
                         ),
+                        _Row(
+                          icon: Icons.delete_outline_rounded,
+                          color: AppColors.pick(AppColors.coral, b),
+                          title: 'Delete account',
+                          subtitle: 'Removes your account and its data',
+                          onTap: () => _confirmDelete(context),
+                        ),
                       ],
                     ),
                     const _SectionTitle('ABOUT'),
@@ -227,6 +234,35 @@ class SettingsView extends GetView<SettingsViewModel> {
       ),
     );
     if (yes ?? false) await controller.signOut();
+  }
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final yes = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete your account?'),
+        content: const Text(
+          'This deletes your login, reminder settings and focus session '
+          "times from our servers. It can't be undone.\n\n"
+          'Screen-time history stays on this phone until you uninstall '
+          'the app.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete account'),
+          ),
+        ],
+      ),
+    );
+    if (yes ?? false) await controller.deleteAccount();
   }
 
   void _showPrivacy(BuildContext context) {

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:regain_app/app/widgets/gradient_button.dart';
 import 'package:regain_app/data/models/notification_prefs.dart';
+import 'package:regain_app/data/repositories/auth_repository.dart';
 import 'package:regain_app/data/repositories/push_messaging.dart';
 import 'package:regain_app/modules/settings/settings_view.dart';
 import 'package:regain_app/modules/shell/shell_view_model.dart';
@@ -196,6 +197,68 @@ void main() {
     await tester.pumpAndSettle();
     expect(auth.user, isNull);
     expect(find.text('Welcome back'), findsOneWidget);
+  });
+
+  Future<void> deleteAccount(WidgetTester tester) async {
+    await openSettings(tester);
+    await tapInSettings(tester, find.text('Delete account'));
+    expect(find.text('Delete your account?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(TextButton, 'Delete account'));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> clearSnackbar(WidgetTester tester) async {
+    await tester.pump(const Duration(seconds: 5));
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('delete account removes its data, then the account', (
+    tester,
+  ) async {
+    final push = FakePush();
+    final store = FakeReminderStore();
+    final auth = FakeAuth();
+    await startApp(
+      tester,
+      prefs: done,
+      push: push,
+      reminders: store,
+      auth: auth,
+    );
+    await deleteAccount(tester);
+    expect(store.deleted, ['alex']);
+    expect(push.unregisters, 1);
+    expect(auth.calls.last, 'delete');
+    expect(auth.user, isNull);
+    expect(find.text('Welcome back'), findsOneWidget);
+    await clearSnackbar(tester);
+  });
+
+  testWidgets('delete account: a stale sign-in asks to log in again', (
+    tester,
+  ) async {
+    final store = FakeReminderStore();
+    final auth = FakeAuth();
+    await startApp(tester, prefs: done, reminders: store, auth: auth);
+    auth.failNext = const AuthFailure('Log in again first.');
+    await deleteAccount(tester);
+    expect(store.deleted, ['alex']);
+    expect(auth.user, isNull);
+    expect(find.text('Welcome back'), findsOneWidget);
+    expect(find.text('Account not deleted yet'), findsOneWidget);
+    await clearSnackbar(tester);
+  });
+
+  testWidgets('delete account offline: nothing changes', (tester) async {
+    final store = FakeReminderStore();
+    final auth = FakeAuth();
+    await startApp(tester, prefs: done, reminders: store, auth: auth);
+    store.failSave = true;
+    await deleteAccount(tester);
+    expect(auth.user, isNotNull);
+    expect(auth.calls, isNot(contains('delete')));
+    expect(find.text('Not deleted'), findsOneWidget);
+    await clearSnackbar(tester);
   });
 
   testWidgets('tapping a push opens its screen once and records the open', (

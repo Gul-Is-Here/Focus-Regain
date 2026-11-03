@@ -46,6 +46,30 @@ class SettingsViewModel extends GetxController {
     Get.offAllNamed(AppRoutes.login);
   }
 
+  /// Deletes the account and what's stored with it online. Screen time
+  /// never left the phone, so it stays until the app is uninstalled.
+  Future<void> deleteAccount() async {
+    try {
+      await reminders.deleteAccountData();
+      await _auth.deleteAccount();
+    } on AuthFailure catch (e) {
+      // Usually "log in again first": the data is gone, signing in and
+      // deleting again removes the account too.
+      await _auth.signOut();
+      Get.offAllNamed(AppRoutes.login);
+      Get.snackbar('Account not deleted yet', e.message);
+      return;
+    } on Exception {
+      Get.snackbar(
+        'Not deleted',
+        "Couldn't delete your account. Check your connection and try again.",
+      );
+      return;
+    }
+    Get.offAllNamed(AppRoutes.login);
+    Get.snackbar('Account deleted', 'Your account and its data are gone.');
+  }
+
   AppLifecycleListener? _lifecycle;
 
   @override
