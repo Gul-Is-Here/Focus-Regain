@@ -33,7 +33,8 @@ test('users read and write only their own settings', async () => {
   await assertFails(getDoc(doc(as('bob'), 'users/alice')));
   await assertFails(setDoc(doc(as('bob'), 'users/alice'), { timezone: 'UTC' }, { merge: true }));
   await assertFails(getDoc(doc(env.unauthenticatedContext().firestore(), 'users/alice')));
-  await assertFails(deleteDoc(doc(alice, 'users/alice')));
+  await assertFails(deleteDoc(doc(as('bob'), 'users/alice')));
+  await assertSucceeds(deleteDoc(doc(alice, 'users/alice'))); // Delete account
 });
 
 test('settings are validated', async () => {
@@ -66,6 +67,8 @@ test('notification log: the app can only mark its own as opened, once', async ()
   await assertFails(updateDoc(doc(as('bob'), 'users/alice/notifications/n1'), { openedAt: serverTimestamp() }));
   await assertSucceeds(updateDoc(doc(alice, 'users/alice/notifications/n1'), { openedAt: serverTimestamp() }));
   await assertFails(updateDoc(doc(alice, 'users/alice/notifications/n1'), { openedAt: serverTimestamp() }));
+  await assertFails(deleteDoc(doc(as('bob'), 'users/alice/notifications/n1')));
+  await assertSucceeds(deleteDoc(doc(alice, 'users/alice/notifications/n1'))); // Delete account
 });
 
 test('server-only state is closed to every client', async () => {

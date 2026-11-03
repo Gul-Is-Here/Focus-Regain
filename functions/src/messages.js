@@ -20,7 +20,7 @@ const TEXT = {
     route: 'focus',
   }),
   reEngagement: () => ({
-    title: 'Focus Regain is here when you need it',
+    title: 'Regain Focus is here when you need it',
     body: 'Open the app to see how your days are going.',
     route: 'dashboard',
   }),

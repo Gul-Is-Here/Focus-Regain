@@ -234,6 +234,12 @@ class FakeAuth implements AuthRepository {
     calls.add('signOut');
     user = null;
   }
+
+  @override
+  Future<void> deleteAccount() async {
+    await _call('delete', null);
+    user = null;
+  }
 }
 
 /// FCM on a device: permission, registration (FID) and incoming pushes.
@@ -318,6 +324,7 @@ class FakeReminderStore implements ReminderStore {
   final activity =
       <({String uid, String timezone, String? activeDay, int sessions})>[];
   final opened = <String>[];
+  final deleted = <String>[];
 
   @override
   Future<NotificationPrefs> loadPrefs(String uid) async {
@@ -361,4 +368,10 @@ class FakeReminderStore implements ReminderStore {
   @override
   Future<void> markOpened(String uid, String notificationId) async =>
       opened.add('$uid/$notificationId');
+
+  @override
+  Future<void> deleteAccountData(String uid) async {
+    if (failSave) throw Exception('offline');
+    deleted.add(uid);
+  }
 }

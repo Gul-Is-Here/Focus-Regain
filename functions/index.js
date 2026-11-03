@@ -1,4 +1,4 @@
-// Push notifications for Focus Regain. Only these trusted functions send messages
+// Push notifications for Regain Focus. Only these trusted functions send messages
 // (Admin SDK); the app only stores its settings, activity and devices.
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';

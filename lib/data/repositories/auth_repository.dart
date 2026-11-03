@@ -34,6 +34,10 @@ abstract class AuthRepository {
   Future<void> sendPasswordReset(String email);
 
   Future<void> signOut();
+
+  /// Deletes the signed-in account. Firebase may first ask for a fresh
+  /// sign-in, which shows up as an [AuthFailure].
+  Future<void> deleteAccount();
 }
 
 /// Firebase Authentication. Google and Apple use Firebase's own provider
@@ -92,6 +96,9 @@ class FirebaseAuthRepository implements AuthRepository {
   @override
   Future<void> signOut() => _auth.signOut();
 
+  @override
+  Future<void> deleteAccount() => _run(() async => _auth.currentUser?.delete());
+
   Future<bool> _withProvider(AuthProvider provider) async {
     try {
       await _auth.signInWithProvider(provider);
@@ -131,6 +138,8 @@ class FirebaseAuthRepository implements AuthRepository {
     'network-request-failed' =>
       'No internet connection. Check it and try again.',
     'operation-not-allowed' => "This sign-in method isn't turned on yet.",
+    'requires-recent-login' =>
+      'For your safety, log in again, then choose Delete account again.',
     'account-exists-with-different-credential' =>
       'This email already uses another sign-in method.',
     _ => _fallback,

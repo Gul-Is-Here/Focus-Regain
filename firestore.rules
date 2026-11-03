@@ -45,7 +45,8 @@ service cloud.firestore {
     }
 
     match /users/{uid} {
-      allow read: if isOwner(uid);
+      // Delete: "Delete account" in Settings removes everything the app can.
+      allow read, delete: if isOwner(uid);
       allow create, update: if isOwner(uid) && validUser(request.resource.data);
 
       match /devices/{deviceId} {
@@ -61,7 +62,7 @@ service cloud.firestore {
 
       // Send log, written by Cloud Functions. The app may only mark it opened, once.
       match /notifications/{notificationId} {
-        allow read: if isOwner(uid);
+        allow read, delete: if isOwner(uid);
         allow update: if isOwner(uid)
           && !('openedAt' in resource.data)
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['openedAt'])

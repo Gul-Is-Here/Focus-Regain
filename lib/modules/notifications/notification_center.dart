@@ -106,6 +106,21 @@ class NotificationCenter extends GetxService {
     final deviceId = await _settings.deviceId();
     await _guard(() => _store.removeDevice(uid, deviceId).timeout(_netTimeout));
     await _guard(() => _push.unregister().timeout(_netTimeout));
+    _reset();
+  }
+
+  /// Delete account, before the account itself goes: stops pushes and
+  /// deletes what the server keeps. Throws if that fails, so nothing is
+  /// left behind under a deleted account.
+  Future<void> deleteAccountData() async {
+    final uid = _uid;
+    if (uid == null) return;
+    await _guard(() => _push.unregister().timeout(_netTimeout));
+    await _store.deleteAccountData(uid);
+    _reset();
+  }
+
+  void _reset() {
     prefs.value = null;
     _pendingTab = null;
     _waitingForSignIn = null;
@@ -227,7 +242,7 @@ class NotificationCenter extends GetxService {
     final id = message.id;
     if (id == null || message.uid != _uid || !_bannered.add(id)) return;
     Get.snackbar(
-      message.title ?? 'Focus Regain',
+      message.title ?? 'Regain Focus',
       message.body ?? '',
       onTap: (_) => open(message),
       duration: const Duration(seconds: 6),

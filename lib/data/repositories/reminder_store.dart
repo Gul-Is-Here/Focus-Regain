@@ -30,6 +30,9 @@ abstract class ReminderStore {
 
   /// Records that a push was opened (the server only knows FCM accepted it).
   Future<void> markOpened(String uid, String notificationId);
+
+  /// Everything above, for Delete account.
+  Future<void> deleteAccountData(String uid);
 }
 
 class FirestoreReminderStore implements ReminderStore {
@@ -99,4 +102,20 @@ class FirestoreReminderStore implements ReminderStore {
           .collection('notifications')
           .doc(notificationId)
           .update({'openedAt': FieldValue.serverTimestamp()});
+
+  @override
+  Future<void> deleteAccountData(String uid) async {
+    for (final name in ['devices', 'notifications']) {
+      final docs = (await _user(uid).collection(name).get()).docs;
+      // A batch takes at most 500 writes.
+      for (var i = 0; i < docs.length; i += 500) {
+        final batch = _db.batch();
+        for (final d in docs.skip(i).take(500)) {
+          batch.delete(d.reference);
+        }
+        await batch.commit();
+      }
+    }
+    await _user(uid).delete();
+  }
 }

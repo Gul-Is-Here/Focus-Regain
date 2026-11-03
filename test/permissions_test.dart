@@ -130,8 +130,8 @@ void main() {
       );
       expect(find.text('Switch greyed out?'), findsOneWidget);
       await tester.ensureVisible(find.text('Open App info'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Open App info'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Open App info'));
       await tester.pumpAndSettle();
       expect(screenTime.appInfoOpened, 1);
 

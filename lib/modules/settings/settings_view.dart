@@ -172,6 +172,13 @@ class SettingsView extends GetView<SettingsViewModel> {
                               controller.account?.name,
                           onTap: () => _confirmSignOut(context),
                         ),
+                        _Row(
+                          icon: Icons.delete_outline_rounded,
+                          color: AppColors.pick(AppColors.coral, b),
+                          title: 'Delete account',
+                          subtitle: 'Removes your account and its data',
+                          onTap: () => _confirmDelete(context),
+                        ),
                       ],
                     ),
                     const _SectionTitle('ABOUT'),
@@ -182,7 +189,7 @@ class SettingsView extends GetView<SettingsViewModel> {
                           color: AppColors.pick(AppColors.emerald, b),
                           title: 'Privacy',
                           subtitle:
-                              'What Focus Regain reads, and where it stays',
+                              'What Regain Focus reads, and where it stays',
                           onTap: () => _showPrivacy(context),
                         ),
                         _Row(
@@ -191,7 +198,7 @@ class SettingsView extends GetView<SettingsViewModel> {
                           title: 'Open-source licences',
                           onTap: () => showLicensePage(
                             context: context,
-                            applicationName: 'Focus Regain',
+                            applicationName: 'Regain Focus',
                           ),
                         ),
                       ],
@@ -229,6 +236,35 @@ class SettingsView extends GetView<SettingsViewModel> {
     if (yes ?? false) await controller.signOut();
   }
 
+  Future<void> _confirmDelete(BuildContext context) async {
+    final yes = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete your account?'),
+        content: const Text(
+          'This deletes your login, reminder settings and focus session '
+          "times from our servers. It can't be undone.\n\n"
+          'Screen-time history stays on this phone until you uninstall '
+          'the app.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete account'),
+          ),
+        ],
+      ),
+    );
+    if (yes ?? false) await controller.deleteAccount();
+  }
+
   void _showPrivacy(BuildContext context) {
     final theme = Theme.of(context);
     showModalBottomSheet<void>(
@@ -247,7 +283,7 @@ class SettingsView extends GetView<SettingsViewModel> {
                 (
                   Icons.phone_android,
                   'Your app usage is read and stored only on this phone. '
-                      'Focus Regain doesn\'t send it anywhere.',
+                      'Regain Focus doesn\'t send it anywhere.',
                 ),
                 (
                   Icons.person_outline,
@@ -633,7 +669,7 @@ class _RemindersSection extends StatelessWidget {
                 Icons.notifications_off_outlined,
                 AppColors.pick(AppColors.blue, b),
                 "Reminders aren't available on this device",
-                'Everything else in Focus Regain works as usual.',
+                'Everything else in Regain Focus works as usual.',
               ),
             ],
             PushPermission.notDetermined => [
