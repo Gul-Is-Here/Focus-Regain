@@ -14,9 +14,9 @@ _Info _infoOf(AppPermission p) => switch (p) {
     icon: Icons.query_stats_rounded,
     name: 'Usage access',
     why:
-        'Lets Focus Regain count your screen time and see which app is '
+        'Lets Regain Focus count your screen time and see which app is '
         'open, so it can pause the ones you choose.',
-    how: 'Tap Focus Regain in the list, then turn on "Permit usage access".',
+    how: 'Tap Regain Focus in the list, then turn on "Permit usage access".',
   ),
   AppPermission.overlay => (
     icon: Icons.layers_rounded,
@@ -39,7 +39,7 @@ _Info _infoOf(AppPermission p) => switch (p) {
         "Stops Android from pausing blocking in the background to save "
         'power.',
     how:
-        'Switch the list to "All apps", tap Focus Regain and choose '
+        'Switch the list to "All apps", tap Regain Focus and choose '
         '"Don\'t optimise" (or "Unrestricted").',
   ),
 };
@@ -92,7 +92,7 @@ class PermissionsView extends GetView<PermissionsViewModel> {
                           const SizedBox(height: 8),
                           Text(
                             info?.why ??
-                                'Every permission is on. Focus Regain can '
+                                'Every permission is on. Regain Focus can '
                                     'now track and protect your time.',
                             style: text.bodyMedium?.copyWith(
                               color: scheme.onSurfaceVariant,

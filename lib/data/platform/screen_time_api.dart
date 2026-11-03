@@ -43,7 +43,7 @@ abstract interface class ScreenTimeApi {
   Future<Uint8List?> getAppIcon(String packageName);
 
   /// Apps the user may block, sorted by name. The phone app, Settings, the
-  /// home screen and Focus Regain itself are never included.
+  /// home screen and Regain Focus itself are never included.
   Future<List<InstalledApp>> getInstalledApps();
 
   Future<BlockingRules> getBlockingRules();

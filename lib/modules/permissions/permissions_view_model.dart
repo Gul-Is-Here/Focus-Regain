@@ -98,7 +98,7 @@ class PermissionsViewModel extends GetxController {
     } on Exception {
       Get.snackbar(
         "Couldn't open Settings",
-        'Open Android Settings and find Focus Regain there.',
+        'Open Android Settings and find Regain Focus there.',
       );
     }
   }
@@ -109,7 +109,7 @@ class PermissionsViewModel extends GetxController {
     } on Exception {
       Get.snackbar(
         "Couldn't open App info",
-        'Open Android Settings > Apps > Focus Regain.',
+        'Open Android Settings > Apps > Regain Focus.',
       );
     }
   }

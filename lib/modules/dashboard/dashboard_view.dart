@@ -1465,7 +1465,7 @@ class _WeekChartCard extends GetView<DashboardViewModel> {
           if (!controller.hasHistory) ...[
             const SizedBox(height: 8),
             Text(
-              'Past days fill in as Focus Regain collects your history.',
+              'Past days fill in as Regain Focus collects your history.',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
               ),
@@ -1532,14 +1532,14 @@ class _UsageAccessPrompt extends GetView<DashboardViewModel> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'To show how long you spend in each app, Focus Regain '
+                    'To show how long you spend in each app, Regain Focus '
                     'needs Usage access. Android asks for this in Settings, '
                     'not in a pop-up.\n\nYour usage data stays on this phone.',
                     style: theme.textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'In Settings, find Focus Regain in the list, turn on '
+                    'In Settings, find Regain Focus in the list, turn on '
                     '"Permit usage access", then come back.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,

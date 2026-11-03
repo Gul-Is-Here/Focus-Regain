@@ -206,7 +206,7 @@ class _SetupSteps extends GetView<BlockingViewModel> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'While blocking is on, Focus Regain checks which app is on '
+                    'While blocking is on, Regain Focus checks which app is on '
                     'screen. If it is one you picked, a pause screen covers it.\n\n'
                     'This check happens only on your phone. Nothing about the '
                     'apps you use is sent anywhere.',
@@ -220,7 +220,7 @@ class _SetupSteps extends GetView<BlockingViewModel> {
           _StepTile(
             number: 1,
             title: 'Usage access',
-            subtitle: 'Lets Focus Regain see which app is open.',
+            subtitle: 'Lets Regain Focus see which app is open.',
             done: controller.hasUsageAccess.value,
             onAllow: controller.openUsageAccessSettings,
           ),
@@ -233,7 +233,7 @@ class _SetupSteps extends GetView<BlockingViewModel> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Each step opens Settings. Turn on Focus Regain there, then come back.',
+            'Each step opens Settings. Turn on Regain Focus there, then come back.',
             style: theme.textTheme.bodySmall,
           ),
         ],
@@ -316,7 +316,7 @@ class _RulesOverview extends GetView<BlockingViewModel> {
                     title: 'Keep blocking running',
                     text:
                         'Some phones stop background apps to save battery. '
-                        'Set Focus Regain to "Unrestricted" so your limits '
+                        'Set Regain Focus to "Unrestricted" so your limits '
                         'keep working.',
                     action: 'Fix settings',
                     onAction: controller.openBatteryOptimizationSettings,

@@ -751,7 +751,7 @@ class _RunningSession extends GetView<FocusViewModel> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
-                                  'You can close Focus Regain; the session keeps '
+                                  'You can close Regain Focus; the session keeps '
                                   'going.',
                                   style: theme.textTheme.bodySmall?.copyWith(
                                     color: scheme.onSurfaceVariant,

@@ -227,7 +227,7 @@ class NotificationCenter extends GetxService {
     final id = message.id;
     if (id == null || message.uid != _uid || !_bannered.add(id)) return;
     Get.snackbar(
-      message.title ?? 'Focus Regain',
+      message.title ?? 'Regain Focus',
       message.body ?? '',
       onTap: (_) => open(message),
       duration: const Duration(seconds: 6),

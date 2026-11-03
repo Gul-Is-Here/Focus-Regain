@@ -214,7 +214,7 @@ class _WelcomePage extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 360),
                 child: Text(
-                  'Focus Regain shows you where your screen time goes and '
+                  'Regain Focus shows you where your screen time goes and '
                   'helps you step away from the apps that pull you in.',
                   textAlign: TextAlign.center,
                   style: text.bodyLarge?.copyWith(

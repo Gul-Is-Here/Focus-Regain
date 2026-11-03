@@ -112,7 +112,7 @@ Packages: `get` (state, DI, routing) is installed. Add the others only when a ph
 
 ## Phase 0: Project setup
 - [x] Package ID changed to `com.focuseregain.app`
-- [x] Display name "Focus Regain" (Android `android:label`, iOS `CFBundleDisplayName`, `GetMaterialApp.title`)
+- [x] Display name "Regain Focus" (Android `android:label`, iOS `CFBundleDisplayName`, `GetMaterialApp.title`)
 - [x] Update `pubspec.yaml` description
 - [x] Replace the counter demo in `lib/main.dart` with a `GetMaterialApp` shell
 - [x] Create the MVVM folder structure (folders under `data/` are created when first needed)
@@ -168,7 +168,7 @@ Packages: `get` (state, DI, routing) is installed. Add the others only when a ph
 - [x] Needs **Display over other apps** (`SYSTEM_ALERT_WINDOW`): Android 10+ only lets a background app open a screen with it
 - [x] Block list kept natively (`BlockListStore.kt`) so it works before Flutter starts; Dart reads/writes it via `getBlockedApps` / `setBlockedApps`
 - [x] `BlockerService.sync()` starts/stops the service to match list + permissions; called on save, in `MainActivity.onResume` and from `BootReceiver.kt` (`BOOT_COMPLETED`, `MY_PACKAGE_REPLACED`)
-- [x] Never blocked (`ProtectedApps.kt`): Focus Regain, home screen, default dialer, Settings. They aren't offered in the picker either
+- [x] Never blocked (`ProtectedApps.kt`): Regain Focus, home screen, default dialer, Settings. They aren't offered in the picker either
 - [x] Blocking tab (`modules/blocking`): disclosure ("How blocking works", data stays on the phone) + 2 setup steps, then a searchable app list with switches; battery tip card links to the battery-optimisation list (no `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`, which Play restricts)
 - [x] Shared `AppIconCache` + `AppIcon` widget and `MessageView` (`app/widgets/`), now used by the dashboard too
 - [ ] Device check: Xiaomi/MIUI also needs "Display pop-up windows while running in the background" and Autostart; Samsung may need "Never sleeping apps". Add per-brand hints if testing shows it
@@ -286,7 +286,7 @@ Packages: `get` (state, DI, routing) is installed. Add the others only when a ph
 - [x] `modules/permissions`: one step per permission, in order: Usage access → Display over other apps → Notifications → Unrestricted battery. Each step: icon, why, an "In Settings" hint, a 4-row checklist (Allowed / Next / Needed), "Open settings"; re-checks on resume (`AppLifecycleListener`) and moves to the next missing one. "Go to dashboard" only when all four are on
 - [x] Gate: onboarding finish and sign-in go to `/permissions` (forwards to the shell at once if everything is already on). At launch `main` checks (`PermissionsViewModel.check`) and opens on `/permissions` if any is off (`RegainApp.needsPermissions`). Unsupported platforms (iOS for now) skip it
 - [x] `StepSegments` / `StepLabel` (`app/widgets/step_progress.dart`) shared with onboarding
-- [x] Restricted settings (Android 13+, CDD 9.8): an app installed from an APK file or download can't get usage access or display-over-apps until the user picks App info > ⋮ > Allow restricted settings (the switch is greyed out). `Permissions.mayNeedRestrictedSettings` reads `getInstallSourceInfo().packageSource` (LOCAL_FILE / DOWNLOADED_FILE, the same rule Android uses); the usage-access and overlay steps then show the unlock steps and an "Open App info" button. Play Store installs never see it. (The ECM API Android uses is not public.)
+- [x] Restricted settings (Android 13+, CDD 9.8): an app installed from an APK file or download can't get usage access or display-over-apps until the user picks App info > ⋮ > Allow restricted settings (the switch is greyed out). `Permissions.mayNeedRestrictedSettings` reads `getInstallSourceInfo().packageSource` (LOCAL_FILE / DOWNLOADED_FILE, the same rule Android uses); the usage-access and overlay steps then show the unlock steps and an "Open App info" button. Play Store installs never see it. (The ECM API Android uses is not public.) To test a release build without the lock, install it over adb (`flutter install --release` or `adb install -r build/app/outputs/flutter-apk/app-release.apk`): that is packageSource OTHER, like `flutter run`. Opening the APK from Downloads/WhatsApp/Drive brings the lock back, and no app code can skip it.
 - [x] Android Go (10+) never grants the overlay (`canRequestOverlay` is false): that step counts as done, and Blocking / Focus say blocking can't work on this phone (`unavailable` status) instead of asking forever
 - Not re-checked while the app stays open: a permission turned off mid-session is caught at the next launch (Dashboard / Blocking still show their own notices)
 

@@ -105,7 +105,7 @@ class RegainApp extends StatelessWidget {
     final settings = Get.find<SettingsRepository>();
     final signedIn = Get.find<AuthRepository>().currentUser != null;
     return GetMaterialApp(
-      title: 'Focus Regain',
+      title: 'Regain Focus',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
