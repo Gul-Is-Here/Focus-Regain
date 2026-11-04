@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- Facebook feed poster, 1080x1350 (4:5). Run store_listing/render.sh after edits. -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: Jakarta; font-weight: 500; src: url(../../assets/fonts/PlusJakartaSans-500.ttf); }
+  @font-face { font-family: Jakarta; font-weight: 700; src: url(../../assets/fonts/PlusJakartaSans-700.ttf); }
+  @font-face { font-family: Jakarta; font-weight: 800; src: url(../../assets/fonts/PlusJakartaSans-800.ttf); }
+  html, body { margin: 0; }
+  body {
+    width: 1080px; height: 1350px; overflow: hidden; position: relative;
+    font-family: Jakarta, sans-serif; color: #EEF2EC;
+    background:
+      radial-gradient(760px 620px at 82% 74%, rgba(97,135,100,.72), transparent 72%),
+      radial-gradient(620px 460px at 4% 0%, rgba(156,176,128,.28), transparent 72%),
+      linear-gradient(165deg, #182125 0%, #273338 100%);
+  }
+  .brand { position: absolute; top: 64px; left: 72px; right: 72px;
+           display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 72px; height: 72px; border-radius: 18px;
+               box-shadow: 0 0 0 2px rgba(238,242,236,.12); }
+  .brand b { font-weight: 800; font-size: 38px; letter-spacing: -.6px; }
+  .tag { margin-left: auto; padding: 10px 24px; border-radius: 999px; font-weight: 700; font-size: 25px;
+         color: #C3D6A8; border: 2px solid rgba(169,192,139,.5); background: rgba(169,192,139,.1); }
+  h1 { position: absolute; top: 176px; left: 72px; margin: 0;
+       font-weight: 800; font-size: 122px; line-height: 1.03; letter-spacing: -3.5px; }
+  h1 em { font-style: normal; color: #B4CC93; }
+  p { position: absolute; top: 450px; left: 72px; width: 900px; margin: 0;
+      font-weight: 500; font-size: 37px; line-height: 1.32; color: #C4D0C9; }
+  /* Real captures, scaled evenly; status bar trimmed. */
+  .phone { position: absolute; padding: 13px 13px 0; background: #0E1417;
+           border-radius: 64px 64px 0 0;
+           box-shadow: 0 0 0 2px rgba(238,242,236,.16), 0 34px 90px rgba(0,0,0,.55); }
+  .phone div { width: 440px; height: 900px; overflow: hidden; border-radius: 52px 52px 0 0; }
+  .phone img { display: block; width: 440px; margin-top: calc(-70px * 440 / 1080); }
+  .back { left: 548px; top: 640px; transform: rotate(5deg); }
+  .front { left: 96px; top: 600px; transform: rotate(-3deg); }
+</style>
+</head>
+<body>
+  <div class="brand"><img src="logo.svg" alt=""><b>Regain Focus</b><span class="tag">For Android</span></div>
+  <h1>Less scrolling.<br><em>More living.</em></h1>
+  <p>See your screen time, block distracting apps and stay in focus.</p>
+  <div class="phone back"><div><img src="../raw/poster_focus.png" alt=""></div></div>
+  <div class="phone front"><div><img src="../raw/poster_dashboard.png" alt=""></div></div>
+</body>
+</html>

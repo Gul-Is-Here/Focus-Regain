@@ -17,11 +17,13 @@ for name in $names; do
   i=$((i + 1))
 done
 shoot "$SRC/feature_graphic.html" 1024 500 export/feature-graphic.png
+shoot "$SRC/facebook_poster.html" 1080 1350 export/facebook-poster.png
+shoot "$SRC/linkedin_post.html" 1200 1200 export/linkedin-post.png
 python3 - <<'EOF'
 from pathlib import Path
 from PIL import Image
 files = sorted(Path('export/phone').glob('*.png'))
-for f in files + [Path('export/feature-graphic.png')]:
+for f in files + [Path(p) for p in ('export/feature-graphic.png', 'export/facebook-poster.png', 'export/linkedin-post.png')]:
     Image.open(f).convert('RGB').save(f, optimize=True)  # Play: no alpha
 # Preview of the whole set: feature graphic above the 7 screenshots.
 shots = [Image.open(f).resize((360, 640), Image.LANCZOS) for f in files]
